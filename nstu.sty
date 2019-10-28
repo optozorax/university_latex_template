@@ -1,0 +1,39 @@
+\RequirePackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+
+% Собственные обозначения для скобок
+\newcommand{\roubr}[1]{\left(#1\right)}    % round  brackets ()
+\newcommand{\sqbr}[1]{\left[#1\right]}     % sqaure brackets [] 
+\newcommand{\cubr}[1]{\left\{#1\right\}}   % curtly brackets {}
+\newcommand{\norm}[1]{\left\|{#1}\right\|} % norm   brackets ||
+
+% Обозначение для описания выводов
+\newcommand{\conclusion}[0]{\noindent\textbf{Вывод: }}
+
+% Обозначение вектора: жирным, прямым шрифтом
+\newcommand{\vc}[1]{\mathrm{\mathbf{#1}}}
+
+% Дифференциал с прямым шрифтом
+\newcommand{\rud}[1]{\operatorname{d}\!#1}
+
+% Дивергенция и градиент
+\newcommand{\rudiv}[0]{\operatorname{div}}
+\newcommand{\rugrad}[0]{\operatorname{grad}}
+\newcommand{\rurot}[0]{\operatorname{rot}}
+\newcommand{\fpartial}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\fpartialpow}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+\newcommand{\ruintegral}[2]{\int\limits_{#1}^{#2}}
+
+% Создаем команду, чтобы переносить текст на новую строку внутри таблицы
+\newcommand{\tcell}[1]{\begin{tabular}{@{}c@{}}#1\end{tabular}} % Выравнивание по центру
+\newcommand{\ltcell}[1]{\begin{tabular}{@{}l@{}}#1\end{tabular}} % Выравнивание по левому краю
+
+% После обычного paragraph не работает перенос на новую строку
+% Делаем, чтобы этот баг исправился, и чтобы paragraph учитывалось в нумерации и оглавлении
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+% Математическое ожидание
+\newcommand{\MExpect}{\mathsf{M}}
+
+\endinput
