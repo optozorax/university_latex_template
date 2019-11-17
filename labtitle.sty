@@ -1,0 +1,41 @@
+\ProvidesPackage{labtitle}
+
+\RequirePackage{multirow}
+\RequirePackage{graphicx}
+
+% Определяем новую команду для создания титульного листа
+\newcommand{\labtitlepage}[9]{
+\newgeometry{left=1cm,top=1cm,right=1cm,bottom=1cm}
+\linespread{1}
+\begin{center}
+\Large{Министерство науки и высшего\\образования Российской Федерации}\\
+\hfill \break
+\large{Федеральное государственное бюджетное\\образовательное учреждение высшего образования}\\ 
+\hfill \break
+\normalsize{\textbf{«НОВОСИБИРСКИЙ ГОСУДАРСТВЕННЫЙ\\ТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ»}}\\
+\hfill \break
+\includegraphics{nstu_logo.eps} \\
+\large{Кафедра #1}\\
+\hfill \break
+\large{#2\\#3}\\
+\hfill \break
+\Large{\textbf{#4}}\\
+\hfill \break
+\hfill \break
+\normalsize{\begin{tabular}{cllp{1.5cm}p{1.5cm}}
+\multirow{5}{*}[0.75cm]{\includegraphics[scale=0.5]{fami_logo.eps}}
+& \textbf{Факультет:} & #5 & & \\[1.25ex]
+& \textbf{Группа:} & #6 & & \\[1.25ex]
+& \textbf{Студент:} & #7 & & \\[1.25ex]
+& \textbf{Вариант:} & #8 & & \\[1.25ex]
+& \textbf{Преподаватель:} & #9 & & \\[1.25ex]
+\end{tabular}} \\
+\vspace*{\fill}
+\large{Новосибирск\\\the\year}
+\end{center}
+\restoregeometry
+\newpage 
+\setcounter{page}{1}
+}
+
+\endinput

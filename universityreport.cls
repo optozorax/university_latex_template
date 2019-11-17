@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesClass{diploma}[2019/11/11 Diploma class by Ilya Sheprut @optozorax]
+\ProvidesClass{universityreport}[2019/11/11 University report class by Ilya Sheprut @optozorax]
 \LoadClass[a4paper,
 	fontsize=14pt,
 	headings=small,
@@ -13,9 +13,9 @@
 %------------------------------------------------------------------------------
 %            СЕКЦИЯ ОПЦИЙ: \documentclass[option1, option2]{diploma}
 	%% Global indentation option
-	\newif\if@gost\@gostfalse
+\newif\if@gost\@gostfalse
 	\DeclareOption{gost}{
-	  \@gosttrue
+		\@gosttrue
 	}
 \ProcessOptions\relax
 
@@ -55,6 +55,7 @@
 		\setsansfont{Source Sans Pro} % Установите этот шрифт, раскомментируйте эту строку, закомментируйте Arial
 		% \setsansfont{Arial}
 		\setmonofont{Consolas}
+		% CMU Typewriter Text
 		\RequirePackage{polyglossia}
 		\setdefaultlanguage{russian}
 		\setotherlanguage{english}
@@ -103,10 +104,10 @@
 % Делает chapter, section жирными, по центру, и нужного размера
 \if@gost
 	\RedeclareSectionCommand[beforeskip=0cm,tocnumwidth=1cm,font={\fontsize{18pt}{21.6pt}}]{chapter}
-	\RedeclareSectionCommand[beforeskip=0cm,tocnumwidth=1cm,font={\fontsize{16pt}{19.2pt}}]{section}
+	\RedeclareSectionCommand[tocnumwidth=1cm,font={\fontsize{16pt}{19.2pt}}]{section}
 \else
 	\RedeclareSectionCommand[beforeskip=0cm,tocnumwidth=1cm,font={\Large}]{chapter}
-	\RedeclareSectionCommand[beforeskip=0cm,tocnumwidth=1cm,font={\large}]{section}
+	\RedeclareSectionCommand[tocnumwidth=1cm,font={\large}]{section}
 \fi
 
 % Chapter теперь по центру
@@ -132,12 +133,12 @@
 %------------------------------------------------------------------------------
 %                   НАСТРОЙКА BEGIN{TABLE, FIGURE, EQUATION
 
-% Чтобы отступ от и до \begin{equation} был равен одной строке (не работает с $$)
+% Чтобы отступ от и до формулы был равен одной строке
 \RequirePackage{amsmath}
 \makeatletter
-	\g@addto@macro\normalsize{%
-		\setlength\abovedisplayskip{14pt}
-		\setlength\belowdisplayskip{14pt}
+	\AtBeginDocument{
+		\setlength{\belowdisplayskip}{14pt} \setlength{\belowdisplayshortskip}{14pt}
+		\setlength{\abovedisplayskip}{-7pt} \setlength{\abovedisplayshortskip}{-7pt}
 	}
 \makeatother
 
@@ -165,17 +166,16 @@
 	labelsep=endash
 }
 
-
-% 
-
 %\RequirePackage{stackengine}
 \setlength\intextsep{0mm}
+
+\RequirePackage{float}
 
 % Создаём специальные окружения, создающие таблицы и рисунки по ГОСТу
 \RequirePackage{environ}
 \NewEnviron{gosttable}[2]{%
 	\vspace{21pt}% 14pt * 1.5 = 21pt
-	\begin{table}[h!]
+	\begin{table}[H]
 		\caption{#1}
 		\label{#2}
 		\centering
@@ -185,38 +185,13 @@
 }
 \NewEnviron{gostimage}[2]{%
 	\vspace{21pt}% 14pt * 1.5 = 21pt
-	\begin{figure}[h!]
+	\begin{figure}[H]
 		\centering
 		\BODY
 		\caption{#1}
 		\label{#2}
 	\end{figure}%
 	\vspace{14pt}% А здесь полуторный интервал уже применился как отступ перед абзацем
-}
-
-%------------------------------------------------------------------------------
-%                                ИСХОДНЫЙ КОД
-
-\RequirePackage{listings}
-\RequirePackage[usenames,dvipsnames]{xcolor}
-
-% Оформление C/C++ кода
-\lstloadlanguages{C,C++}
-\lstdefinestyle{listing_C} {
-	belowcaptionskip=1\baselineskip,
-	breaklines=true,									% Перенос строк
-	numbers=left,										% Нумерация строк
-	numbersep=5pt,
-	showstringspaces=false,
-	basicstyle=\linespread{1}\ttfamily\scriptsize,		% Шрифт
-	keywordstyle=\bfseries\color{Blue},					% Ключевые слова синим
-	morekeywords={										% Дополнительные кючевые слова
-	},			
-	commentstyle=\itshape\color{Green},				% Комментарии зеленым
-	keepspaces = true,			
-	stringstyle=\color{Maroon},							% Строки сиреневым
-	%frame=tb,											% Рамка сверху и снизу
-	extendedchars=true
 }
 
 %------------------------------------------------------------------------------
@@ -231,5 +206,19 @@
 
 % Надо вставить где-то внутри текста, но не перед \tableofcontents. Фиксит баг, что при первом использовании texttt или textsf у них имеется какой-то идиотский большой отступ. По сути это костыль, я не разобрался в первопричине почему так происходит.
 \newcommand{\fixTexttTextscSpaceBug}{\vphantom{\hphantom{\texttt{}\textsf{}}}}
+
+%------------------------------------------------------------------------------
+%                            ПЕРЕОПРЕДЕЛЕНИЕ НАЗВАНИЙ
+
+\addto\captionsrussian{\renewcommand{\abstractname}{Аннотация}}
+\addto\captionsrussian{\renewcommand{\appendixname}{Приложение}}
+\addto\captionsrussian{\renewcommand{\bibname}{Список литературы}}
+\addto\captionsrussian{\renewcommand{\chaptername}{Глава}}
+\addto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
+\addto\captionsrussian{\renewcommand{\figurename}{Рисунок}}
+\addto\captionsrussian{\renewcommand{\indexname}{Предметный указатель}}
+\addto\captionsrussian{\renewcommand{\listfigurename}{Список рисунков}}
+\addto\captionsrussian{\renewcommand{\listtablename}{Список таблиц}}
+\addto\captionsrussian{\renewcommand{\tablename}{Таблица}}
 
 \endinput

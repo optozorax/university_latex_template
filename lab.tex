@@ -1,0 +1,65 @@
+\PassOptionsToPackage{usenames,dvipsnames}{xcolor}
+
+\documentclass{universityreport}
+
+% Стили из этого репозитория
+\usepackage{fixint}
+\usepackage{rumathgrk}
+\usepackage{labformula}
+\usepackage{labtitle}
+\usepackage[pretty]{labcode}
+
+% Выставляем мета-информацию
+\hypersetup{
+    pdfauthor={Шепрут И.И.},
+    pdftitle={Шаблон для Лабораторной работы}
+}
+
+\usepackage{pdfpages}
+\usepackage{graphicx}
+
+\begin{document}
+
+% Создаём титульный лист лабораторной работы
+\labtitlepage{%
+% Название кафедры
+прикладной математики
+}{%
+Лабораторная работа №1
+}{%
+по дисциплине <<Создание идеальных отчётов в \LaTeX>>
+}{% Название лабораторной
+Отчёт божественного качества
+}{% Название факультета
+ПМИ
+}{% Номер группы
+ПМ-63
+}{% Имя студента
+Шепрут И.И.
+}{% Номер варианта
+42
+}{% Имя преподавателя
+Шепрут И.И.
+}
+
+\chapter{Введение}\fixTexttTextscSpaceBug
+
+Весь основной функционал показан в файле диплома. Здесь же показан дополнительный функционал для лабораторных работ. В нём используется титульник из пакета \codeinline{TeX}{\usepackage{labtitle}} при помощи следующего кода:
+
+\codeinput{TeX}{title_example.tex}{title\_example.tex}
+
+Так же можно вставлять код прямо в тексте наподобие \codeinline{C++}{int a = 0;} при помощи \codeinline{TeX}{\codeinline{C++}{int a = 0;}}. 
+
+Здесь, в отличие от файла диплома используется \codeinline{TeX}{\usepackage[pretty]{labcode}}, когда там просто \codeinline{TeX}{\usepackage{labcode}}. Предпочтительней использовать первый вариант, потому что он мощнее по возможностям и красивей выглядит.
+
+Для кода из файлов используется минимально разрешённый размер шрифта --- 8pt.
+
+Пример вставки кода из файла:
+
+\codeinput{C++}{vector2.h}{vector2.h}
+
+\chapter{Вывод}
+
+Используйте \LaTeX.
+
+\end{document}

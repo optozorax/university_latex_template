@@ -1,0 +1,138 @@
+\ProvidesPackage{labcode}
+%------------------------------------------------------------------------------
+\newif\if@pretty\@prettyfalse
+	\DeclareOption{pretty}{
+		\@prettytrue
+	}
+\ProcessOptions\relax
+%------------------------------------------------------------------------------
+\if@pretty
+% Красивое оформление кода с помощью minted
+
+% Для цветных таблиц
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+\tcbuselibrary{minted}
+\usemintedstyle{vs}
+
+% Для подсветки кода
+\usepackage{minted}
+
+% Задаем цвет номеров строк подсветки кода
+\renewcommand{\theFancyVerbLine}{\sffamily\textcolor[rgb]{1, 1, 1}{\scriptsize\arabic{FancyVerbLine}}}
+
+% Определяем новую команду для красивой вставки кода в рамочке и с прочими прелестями из файла
+\newcommand{\codeinput}[3]{
+\begin{tcolorbox}[
+	colback=black!5!white,
+	colframe=black!30!white,
+	boxrule=0.5pt, 
+	listing only,
+	left=-0.5mm,
+	leftrule=6mm,
+	arc=2mm, outer arc=2mm,
+	top=2pt,
+	bottom=0pt,
+	enhanced,
+	breakable,
+	title={#3},
+	coltitle=black, 
+	fonttitle=\bfseries\ttfamily\large,
+	attach boxed title to top center={yshift=-3mm,yshifttext=-1mm},
+	boxed title style={
+		enhanced,
+		nobeforeafter,
+		tcbox raise base,
+		boxrule=0.4pt,
+		top=0.5mm,
+		bottom=0.5mm,
+		right=0mm,
+		left=4mm,
+		arc=1pt,
+		boxsep=3pt,
+		before upper={\vphantom{dlg}},
+		colframe=black!30!white,
+		colback=black!10!white,
+		overlay={
+			\begin{tcbclipinterior}
+			\fill[black!30!white]
+				(frame.south west)
+					rectangle node[text=white,font=\sffamily\bfseries\footnotesize,rotate=90] {FILE} 
+				([xshift=4mm]frame.north west);
+			\end{tcbclipinterior}
+		}
+	},
+]
+\inputminted[
+	breaklines,
+	breakanywhere=true,
+	autogobble,
+	linenos,
+	numbersep=1mm,
+	mathescape, 
+	fontsize=\fontsize{8pt}{8pt}\selectfont,
+	tabsize=4
+]{#1}{#2}
+\end{tcolorbox}
+}
+
+% Определяем новую команду для вставки кода прямо в тексте
+\setmintedinline{fontsize=\fontsize{14pt}{14pt}}
+\newtcbox{\inlinecodetable}{on line,
+arc=2pt,colback=gray!10!white,colframe=gray!50!black,
+before upper={\rule[-3pt]{0pt}{10pt}},boxrule=0.5pt,
+boxsep=0pt,left=2pt,right=2pt,top=2pt,bottom=0pt}
+\newcommand{\codeinline}[2]{\inlinecodetable{\mintinline{#1}{#2}}}
+%------------------------------------------------------------------------------
+\else
+%------------------------------------------------------------------------------
+% Обычное оформление кода с помощью listings
+\RequirePackage{listings}
+
+\lstloadlanguages{C,C++,TeX}
+\lstdefinestyle{mylisting} {
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,                                    % Перенос строк
+	numbers=left,                                       % Нумерация строк
+	numbersep=5pt,
+	showstringspaces=false,
+	basicstyle=\fontsize{8pt}{8pt}\selectfont\linespread{1}\ttfamily,                 % Шрифт
+	keywordstyle=\bfseries\color{Blue},                 % Ключевые слова синим
+	morekeywords={                                      % Дополнительные кючевые слова
+	},			
+	commentstyle=\itshape\color{Green},                 % Комментарии зеленым
+	keepspaces = true,			
+	stringstyle=\color{Maroon},                         % Строки сиреневым
+	%frame=tb,                                          % Рамка сверху и снизу
+	extendedchars=true
+}
+
+\lstdefinestyle{inlinelisting} {
+	belowcaptionskip=1\baselineskip,
+	breaklines=true,                                    % Перенос строк
+	numbers=left,                                       % Нумерация строк
+	numbersep=5pt,
+	showstringspaces=false,
+	basicstyle=\ttfamily,                               % Шрифт
+	keywordstyle=\bfseries\color{Blue},                 % Ключевые слова синим
+	morekeywords={                                      % Дополнительные кючевые слова
+	},			
+	commentstyle=\itshape\color{LimeGreen},             % Комментарии зеленым
+	keepspaces = true,			
+	stringstyle=\color{Maroon},                         % Строки сиреневым
+	extendedchars=true
+}
+
+\newcommand{\codeinline}[1]{
+\lstinline[language=#1,style=inlinelisting]
+}
+
+\newcommand{\codeinput}[3]{
+\noindent\textbf{\texttt{#3}}
+\lstinputlisting[language=#1,style=mylisting]{#2}
+}
+\fi
+%------------------------------------------------------------------------------
+
+\endinput
